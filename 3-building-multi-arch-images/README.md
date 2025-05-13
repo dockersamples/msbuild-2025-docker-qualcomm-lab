@@ -9,7 +9,7 @@ In this hands-on, you will complete the following objectives:
 
 Let's get started!
 
-## Step 1: Writing a Dockerfile
+## Step 1: Building the app
 
 In case you've never written a Dockerfile, think of it as the set of instructions on how a container image should be created. It outlines the base image (the image we will extend), the files to copy in, and various commands to run. It then specifies the default command a container should run when using the image.
 
@@ -33,15 +33,15 @@ In case you've never written a Dockerfile, think of it as the set of instruction
 2. Now that we have a Dockerfile, let's build the image using the `docker build` command:
 
     ```bash
-    docker build -t sample-app .
+    docker build -t genai-app .
     ```
 
     This may take a moment for the build to run, but you'll eventually see output similar to the following:
 
     ```console
     ...
-     => => naming to docker.io/library/sample-app:latest
-     => => unpacking to docker.io/library/sample-app:latest
+     => => naming to docker.io/library/genai-app:latest
+     => => unpacking to docker.io/library/genai-app:latest
 
     View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/x3hiuzo705yl7joedmcbqj5j6
 
@@ -52,7 +52,7 @@ In case you've never written a Dockerfile, think of it as the set of instruction
 3. Start a new container using your newly built image using the following command:
 
     ```bash
-    docker run -d --name genai-app -e OPENAI_BASE_URL=http://model-runner.docker.internal/engines/v1 -e KAFKA_BROKER_URL=kafka:9093 --network msbuild-lab sample-app
+    docker run -d --name genai-app -e OPENAI_BASE_URL=http://model-runner.docker.internal/engines/v1 -e KAFKA_BROKER_URL=kafka:9093 --network msbuild-lab genai-app
     ```
 
     This command is using the following flags:
@@ -85,3 +85,65 @@ In case you've never written a Dockerfile, think of it as the set of instruction
     ```
 
     Since we had the `--rm` flag on the container, the container will automatically be removed.
+
+## Step 2: Multi-architecture builds
+
+The image that we've built is currently only built for the native architecture. For the machines used in this lab, that would be `linux/arm64`. 
+
+Recognizing many production environments and other colleagues may be on `linux/amd64` architectures, how can we build images that work natively on each platform? That's where multi-architecture builds come in!
+
+1. Validate the architecture of the image we built by using the following command:
+
+    ```bash
+    docker image inspect genai-app
+    ```
+
+    We should see in the output an `Architecture` of `arm64` and `Os` of `linux`.
+
+2. Validate we do not have a `linux/amd64` image:
+
+    ```bash
+    docker image inspect --platform linux/amd64 genai-app
+    ```
+
+    This should give output similar to the following:
+
+    ```console
+    Error response from daemon: image with reference genai-app was found but does not provide the specified platform (linux/amd64)
+    ```
+
+3. Build the image for multiple architectures by using the following command:
+
+    ```bash
+    docker build -t genai-app --platform=linux/amd64,linux/arm64 .
+    ```
+
+    This will build the `linux/arm64` build natively and use emulation for all non-native architectures.
+
+4. Now, try to inspect the image for the `linux/amd64` variant. You should now see the image exists:
+
+    ```bash
+    docker image inspect --platform linux/amd64 genai-app
+    ```
+
+## Appendix A: Advanced multi-stage builds
+
+While it goes beyond the scope of this workshop, it's worth sharing an advanced capability when doing multi-architecture builds.
+
+For some apps, a build step is required, but that build step may still be platform agnostic. Examples might include building a React app or compiling .NET or Java applications. In these cases, it doesn't make sense to do the compilation in an emulated environment as it's both not needed and will run slowly.
+
+When using multi-stage builds, you can add instructions to indicate which stages run on which architectures. You do so by using the `$BUILDPLATFORM` and `$TARGETPLATFORM` variables.
+
+For example, the following Dockerfile will compile the app using _only_ the build architecture (the native) and then use the requested platform for the final stage.
+
+```dockerfile
+FROM --platform=$BUILDPLATFORM node:lts-alpine AS build
+WORKDIR /usr/local/app
+COPY package* ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM --platform=$TARGETPLATFORM nginx:alpine
+COPY --from=build /usr/local/app/dist /usr/share/nginx/html
+```
