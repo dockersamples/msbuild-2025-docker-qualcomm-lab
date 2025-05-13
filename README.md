@@ -9,5 +9,5 @@ The lab is structured as a series of mini-lectures with small hands-on segments.
 
 1. [Running native and non-native containers and multi-container apps](./1-running-containers/)
 2. [Writing an event-driven GenAI application that uses Docker Model Runner](./2-writing-genai-app)
-3. Building container images in multi-architecture way
+3. [Building multi-architecture container images](./3-building-multi-arch-images)
 

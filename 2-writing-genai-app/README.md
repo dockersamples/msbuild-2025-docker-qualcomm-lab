@@ -190,9 +190,15 @@ As mentioned earlier, we are going to respond to events and use a GenAI model to
         ],
       });
 
+      // Sometimes, models still wrap JSON in markdown code blocks, so let's remove that.
+      let responseText = response.choices[0].message.content;
+      if (responseText.startsWith('```json')) {
+        responseText = responseText.slice(7, -3);
+      }
+
       // Simply output them to the console.
       // In real situations, we'd look up relavent customers and queue emails.
-      const { emails } = JSON.parse(response.choices[0].message.content);
+      const { emails } = JSON.parse(responseText);
       emails.forEach(generatedEmail => {
         console.log(`Subject: ${generatedEmail.subject}`);
         console.log(`Body: ${generatedEmail.body}`);
