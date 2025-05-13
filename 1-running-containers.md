@@ -15,25 +15,25 @@ Let's get started!
 
 1. Start the `docker/welcome-to-docker` container:
 
-  ```bash
-  docker run -d -p 80:80 --name welcome docker/welcome-to-docker
-  ```
+    ```bash
+    docker run -d -p 80:80 --name welcome docker/welcome-to-docker
+    ```
 
-  This command is using the following flags:
+    This command is using the following flags:
 
-  - `-d` - run the container in "detached" mode. This runs the container in the background
-  - `-p 80:80` - connect port 80 of the host to port 80 of the container. This is what allows the container to be opened in the browser
-  - `--name welcome` - give this container a specific name. Normally, this flag is skipped and an auto-generated name is used. But, it helps with lab environments to have predictable names.
+    - `-d` - run the container in "detached" mode. This runs the container in the background
+    - `-p 80:80` - connect port 80 of the host to port 80 of the container. This is what allows the container to be opened in the browser
+    - `--name welcome` - give this container a specific name. Normally, this flag is skipped and an auto-generated name is used. But, it helps with lab environments to have predictable names.
 
 2. Open your browser and navigate to `http://localhost`. You should see the "Congratulations!!!" page. This is being served by the container!
 
 3. Validate that the container is running:
 
-  ```bash
-  docker ps
-  ```
+    ```bash
+    docker ps
+    ```
 
-  Ensure the `docker/welcome-to-docker` container is listed and running.
+    Ensure the `docker/welcome-to-docker` container is listed and running.
 
 4. Check the platform for the container by running the following command:
 
@@ -68,11 +68,11 @@ Let's get started!
 
 1. Start the `nginx` container, specifying the `linux/amd64` platform:
 
-  ```bash
-  docker run --platform linux/amd64 --name non-native -d -p 8080:80 nginx
-  ```
+    ```bash
+    docker run --platform linux/amd64 --name non-native -d -p 8080:80 nginx
+    ```
 
-  This command looks very similar to the previous run command, except for the `--platform` flag. This is telling the engine to run the `linux/amd64` and _not_ the native `linux/arm64` variant.
+    This command looks very similar to the previous run command, except for the `--platform` flag. This is telling the engine to run the `linux/amd64` and _not_ the native `linux/arm64` variant.
 
 2. Open your browser and navigate to `http://localhost:8080`. You should see the default NGINX welcome page.
 
