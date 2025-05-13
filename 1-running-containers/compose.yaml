@@ -1,4 +1,10 @@
 services:
+  model:
+    provider:
+      type: model
+      options:
+        model: jacobhoward459/phi4-mini-instruct:3.84B-Q4_0
+
   kafka:
     image: apache/kafka:4.0.0
     ports:
