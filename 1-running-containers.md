@@ -4,7 +4,7 @@
 
 In this hands-on, you will complete the following objectives:
 
-- Run a simple container using a multi-architecture image
+- Run a simple container using a multi-platform image
 - Demonstrate cross-platform emulation by using a non-native container image
 - Use Docker Compose to launch several containers
 
@@ -35,13 +35,13 @@ Let's get started!
 
   Ensure the `docker/welcome-to-docker` container is listed and running.
 
-4. Check the architecture for the container by running the following command:
+4. Check the platform for the container by running the following command:
 
     ```bash
     docker inspect welcome
     ```
 
-    Near the end of the output, you should see a field named `ImageManifestDescriptor`. This field should indicate an architecture and platform like the following:
+    Near the end of the output, you should see a field named `ImageManifestDescriptor`. This field should indicate a platform like the following:
 
     ```json
     {
@@ -76,15 +76,13 @@ Let's get started!
 
 2. Open your browser and navigate to `http://localhost:8080`. You should see the default NGINX welcome page.
 
-3. Validate the architecture is indeed the `linux/amd64` architecture:
-
-4. Check the architecture for the container by running the following command:
+3. Check the platform for the container by running the following command:
 
     ```bash
     docker inspect non-native
     ```
 
-    Near the end of the output, you should see a field named `ImageManifestDescriptor`. This field should indicate an architecture and platform like the following:
+    Near the end of the output, you should see a field named `ImageManifestDescriptor`. This field should indicate a platform similar to the following:
 
     ```json
     {
@@ -104,7 +102,7 @@ Let's get started!
     >
     > Note that native architectures will perform better than emulated architectures. Therefore, when possible, use the native architecture (which is the default choice).
 
-5. Stop and remove the welcome container by using the `docker rm` command with the `-f` flag:
+4. Stop and remove the welcome container by using the `docker rm` command with the `-f` flag:
 
     ```bash
     docker rm -f non-native
@@ -121,10 +119,10 @@ In this directory is a `compose.yaml` file. This file will start two containers:
 
 We are going to use these services in our next lab. But, for this portion, we're simply going to demonstrate that Compose-based applications work as expected.
 
-1. Open a terminal in VS Code by going to **Terminal** -> **New terminal** and navigate to this directory.
+1. Open a terminal in VS Code by going to **Terminal** -> **New terminal** and navigate to the `app` directory.
 
     ```bash
-    cd 1-running-containers
+    cd app
     ```
 
 2. Start the Compose stack by running the following command:
@@ -165,7 +163,7 @@ We are going to use these services in our next lab. But, for this portion, we're
 
 In this lab, you accomplished the following:
 
-- Ran a native container using the `docker/welcome-to-docker` image and explored its architecture.
+- Ran a native container using the `docker/welcome-to-docker` image and explored its platform.
 - Demonstrated cross-platform emulation by running a non-native `linux/amd64` container using the `nginx` image.
 - Used Docker Compose to start a multi-container application, including a Kafka instance and a Kafka UI, and interacted with the Kafka topic by producing and viewing messages.
 

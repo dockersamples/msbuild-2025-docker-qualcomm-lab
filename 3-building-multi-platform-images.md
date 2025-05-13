@@ -13,7 +13,7 @@ Let's get started!
 
 In case you've never written a Dockerfile, think of it as the set of instructions on how a container image should be created. It outlines the base image (the image we will extend), the files to copy in, and various commands to run. It then specifies the default command a container should run when using the image.
 
-1. In the `2-writing-genai-app` directory, create a file named `Dockerfile` (no extension) with the following contents:
+1. In the repo's `app` directory, create a file named `Dockerfile` (no extension) with the following contents:
 
     ```dockerfile
     FROM node:lts-alpine

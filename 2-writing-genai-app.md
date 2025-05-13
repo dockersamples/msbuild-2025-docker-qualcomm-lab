@@ -83,7 +83,7 @@ In real situations, you'll likely want to leverage marketing operation systems t
 
 2. If you don't have the Compose stack running from the previous hands-on, go back and launch it.
 
-3. Install the app's dependencies by running the following command while in the `2-writing-genai-app` directory:
+3. Install the app's dependencies by running the following command while in the repo's `app` directory:
 
     ```bash
     npm install
