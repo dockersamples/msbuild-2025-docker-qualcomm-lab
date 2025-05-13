@@ -95,24 +95,18 @@ Recognizing many production environments and other colleagues may be on `linux/a
 1. Validate the platform of the image we built by using the following command:
 
     ```bash
-    docker image inspect genai-app
+    docker image ls --filter reference=sample-app --tree
     ```
 
-    We should see in the output an `Architecture` of `arm64` and `Os` of `linux`.
-
-2. Validate we do not have a `linux/amd64` image:
-
-    ```bash
-    docker image inspect --platform linux/amd64 genai-app
-    ```
-
-    This should give output similar to the following:
+    You should see output similar to the following:
 
     ```console
-    Error response from daemon: image with reference genai-app was found but does not provide the specified platform (linux/amd64)
+    IMAGE                ID             DISK USAGE   CONTENT SIZE   EXTRA
+    sample-app:latest    47098fe2a060        245MB         57.4MB
+    └─ linux/arm64       79fe963eee0a        245MB         57.4MB
     ```
 
-3. Build the image for multiple platforms by using the following command:
+2. Build the image for multiple platforms by using the following command:
 
     ```bash
     docker build -t genai-app --platform=linux/amd64,linux/arm64 .
@@ -120,10 +114,19 @@ Recognizing many production environments and other colleagues may be on `linux/a
 
     This will build the `linux/arm64` build natively and use emulation for all non-native platforms.
 
-4. Now, try to inspect the image for the `linux/amd64` variant. You should now see the image exists:
+3. Now, try to inspect the image for the `linux/amd64` variant. You should now see the image exists:
 
     ```bash
-    docker image inspect --platform linux/amd64 genai-app
+    docker image ls --filter reference=sample-app --tree
+    ```
+
+    You should now see output similar to the following:
+
+    ```console
+    IMAGE                ID             DISK USAGE   CONTENT SIZE   EXTRA
+    sample-app:latest    cce0552e8806        303MB          115MB
+    ├─ linux/amd64       bc295296349f       57.8MB         57.8MB
+    └─ linux/arm64       79fe963eee0a        245MB         57.4MB
     ```
 
 ## Appendix A: Advanced multi-stage builds
