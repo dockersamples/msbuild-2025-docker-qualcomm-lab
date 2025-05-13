@@ -4,7 +4,9 @@ const OpenAI = require('openai');
 // Kafka configuration
 const kafka = new Kafka({
   clientId: 'ai-marketer',
-  brokers: ['localhost:9092'], // Replace with your Kafka broker addresses
+  brokers: [
+    process.env.KAFKA_BROKER_URL || 'localhost:9092'
+  ],
 });
 
 const consumer = kafka.consumer({ groupId: 'products-group' });
