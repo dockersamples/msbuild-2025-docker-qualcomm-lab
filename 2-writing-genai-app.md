@@ -52,6 +52,8 @@ The Docker Model Runner is a new feature that enables the usage of models locall
 
     This will take a little bit to download, as the model is ~2.2GB.
 
+    If you want to see what other models are available, you can [check out the official AI catalog on Docker Hub](https://hub.docker.com/u/ai).
+
 3. Let's run a simple query against the model using the following command:
 
     ```bash
@@ -219,3 +221,10 @@ As mentioned earlier, we are going to respond to events and use a GenAI model to
     ```
 
     After a moment, you should see three sample emails to help market this new product!
+
+## Recap
+
+In this hands-on, you accomplished the following:
+
+- Experimented with Docker Model Runner by listing models and running a model directly in the CLI
+- Created a simple event-driven GenAI application that generates marketing emails based on incoming events

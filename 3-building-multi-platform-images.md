@@ -129,6 +129,9 @@ Recognizing many production environments and other colleagues may be on `linux/a
     └─ linux/arm64       79fe963eee0a        245MB         57.4MB
     ```
 
+> [!TIP]
+> If you want to push the image to Docker Hub, update the image tag to include your Docker Hub username and add the `--push` flag. An example might be `docker build -t devreldemo/genai-app --platform=linux/arm64,linux/amd64 --push .`.
+
 ## Appendix A: Advanced multi-stage builds
 
 While it goes beyond the scope of this workshop, it's worth sharing an advanced capability when doing multi-platform builds.
@@ -150,3 +153,11 @@ RUN npm run build
 FROM --platform=$TARGETPLATFORM nginx:alpine
 COPY --from=build /usr/local/app/dist /usr/share/nginx/html
 ```
+
+## Recap
+
+In this hands-on, you accomplished the following:
+
+- Wrote a Dockerfile to containerize the event-driven GenAI application
+- Learned how to build the image for multiple platforms
+- Learned how to list images locally and see the available platforms

@@ -25,7 +25,7 @@ Let's get started!
     - `-p 80:80` - connect port 80 of the host to port 80 of the container. This is what allows the container to be opened in the browser
     - `--name welcome` - give this container a specific name. Normally, this flag is skipped and an auto-generated name is used. But, it helps with lab environments to have predictable names.
 
-2. Open your browser and navigate to `http://localhost`. You should see the "Congratulations!!!" page. This is being served by the container!
+2. Open your browser and navigate to [http://localhost](http://localhost). You should see the "Congratulations!!!" page. This is being served by the container!
 
 3. Validate that the container is running:
 
@@ -74,7 +74,7 @@ Let's get started!
 
     This command looks very similar to the previous run command, except for the `--platform` flag. This is telling the engine to run the `linux/amd64` and _not_ the native `linux/arm64` variant.
 
-2. Open your browser and navigate to `http://localhost:8080`. You should see the default NGINX welcome page.
+2. Open your browser and navigate to [http://localhost:8080](http://localhost:8080). You should see the default NGINX welcome page.
 
 3. Check the platform for the container by running the following command:
 
@@ -97,16 +97,14 @@ Let's get started!
     }
     ```
 
-    > [!TIP]
-    > What this is demonstrating is that, with emulation support provided by Docker Desktop, you can run both `linux/arm64` (native) and `linux/amd64` containers. 
-    >
-    > Note that native architectures will perform better than emulated architectures. Therefore, when possible, use the native architecture (which is the default choice).
-
 4. Stop and remove the welcome container by using the `docker rm` command with the `-f` flag:
 
     ```bash
     docker rm -f non-native
     ```
+
+> [!TIP]
+> What this is demonstrating is that, with emulation support provided by Docker Desktop, you can run both `linux/arm64` (native) and `linux/amd64` containers. Note that native architectures will perform better than emulated architectures. Therefore, when possible, use the native architecture (which is the default choice).
 
 ---
 
@@ -115,7 +113,7 @@ Let's get started!
 In this directory is a `compose.yaml` file. This file will start two containers:
 
 1. **apache/kafka** - a [Kafka](https://kafka.apache.org/documentation/) instance, which is an open-source distributed event streaming platform
-2. **kafbat/kafbat-ui** - an open-source visualizer for the Kafka cluster
+2. **kafbat/kafbat-ui** - [Kafbat](https://github.com/kafbat/kafka-ui), an open-source UI for managing Kafka clusters
 
 We are going to use these services in our next lab. But, for this portion, we're simply going to demonstrate that Compose-based applications work as expected.
 
@@ -161,10 +159,8 @@ We are going to use these services in our next lab. But, for this portion, we're
 
 ## Recap
 
-In this lab, you accomplished the following:
+In this hands-on, you accomplished the following:
 
 - Ran a native container using the `docker/welcome-to-docker` image and explored its platform.
 - Demonstrated cross-platform emulation by running a non-native `linux/amd64` container using the `nginx` image.
 - Used Docker Compose to start a multi-container application, including a Kafka instance and a Kafka UI, and interacted with the Kafka topic by producing and viewing messages.
-
-You're now ready for this next lab, but try not to jump ahead of the next overview!
