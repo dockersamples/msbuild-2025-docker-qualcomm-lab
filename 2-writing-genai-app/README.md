@@ -113,7 +113,7 @@ As mentioned earlier, we are going to respond to events and use a GenAI model to
 
     // START COPYING HERE
     const openai = new OpenAI({
-      baseURL: "http://localhost:12434/engines/v1",
+      baseURL: process.env.OPENAI_BASE_URL || "http://localhost:12434/engines/v1",
       apiKey: "not-required",
     });
     // STOP COPYING HERE
@@ -128,7 +128,7 @@ As mentioned earlier, we are going to respond to events and use a GenAI model to
 
     ```javascript
     const openai = new OpenAI({
-      baseURL: "http://localhost:12434/engines/v1",
+      baseURL: process.env.OPENAI_BASE_URL || "http://localhost:12434/engines/v1",
       apiKey: "not-required",
     });
 
@@ -177,7 +177,7 @@ As mentioned earlier, we are going to respond to events and use a GenAI model to
 
       // Generate sample marketing emails
       const response = await openai.chat.completions.create({
-        model: 'jacobhoward459/phi4-mini-instruct:3.84B-Q4_0',
+        model: process.env.OPENAI_MODEL || 'jacobhoward459/phi4-mini-instruct:3.84B-Q4_0',
         messages: [
           {
             role: "system",
