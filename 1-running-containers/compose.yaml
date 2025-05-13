@@ -33,3 +33,7 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9093
     depends_on:
       - kafka
+
+networks:
+  default:
+    name: msbuild-lab
