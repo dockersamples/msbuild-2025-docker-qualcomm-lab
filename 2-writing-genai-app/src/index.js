@@ -38,3 +38,11 @@ async function processMessage(data) {
 }
 
 run().catch(console.error);
+
+["SIGINT", "SIGTERM"].forEach((signal) => {
+  process.on(signal, async () => {
+    console.log(`Received ${signal}. Disconnecting...`);
+    consumer.disconnect();
+    process.exit(0);
+  });
+});
