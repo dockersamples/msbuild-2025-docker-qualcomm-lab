@@ -1,0 +1,17 @@
+{
+  "name": "ai-marketer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "nodemon": "^3.1.10",
+    "openai": "^4.97.0"
+  }
+}
