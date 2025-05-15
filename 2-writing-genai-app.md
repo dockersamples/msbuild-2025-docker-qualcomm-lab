@@ -137,35 +137,26 @@ As mentioned earlier, we are going to respond to events and use a GenAI model to
     // START COPYING HERE
     const SYSTEM_PROMPT = `You are a tool that is used to generate marketing emails to potential customers for a newly created product. You will be given the name and description of the product, and you will generate a marketing email to potential customers.
         
-    Generate three emails with different styles and tones. Each email should be no more than 200 words. The emails should be in English and should be written in a friendly and engaging tone. The emails should include a call to action, such as "Click here to learn more" or "Order now". The emails should also include a subject line that is catchy and relevant to the product.
-
     The result should be a JSON object with the following structure:
     {
-      "emails": [
-        {
-          "subject": "Subject line for email 1",
-          "body": "Body of email 1"
-        },
-        {
-          "subject": "Subject line for email 2",
-          "body": "Body of email 2"
-        },
-        {
-          "subject": "Subject line for email 3",
-          "body": "Body of email 3"
-        }
-      ]
+      "subject": "Subject line for email",
+      "body": "Body of email"
     }
-
+    
     Do NOT include any additional information or explanations. Only the JSON object should be returned.
-
-    The emails should be relevant to the product and should not contain any irrelevant information. 
-    The emails should be written in a way that is easy to understand and should not contain any technical jargon. 
-    The emails should be written in a way that is engaging and should not be boring. 
-    The emails should be written in a way that is persuasive and should not be pushy. 
-    The emails should be written in a way that is friendly and should not be rude. 
-    The emails should be written in a way that is professional and should not be unprofessional.
+    
+    The email MUST be less than 200 words in length. 
+    The email MUST be in English and should be written in a friendly and engaging tone. 
+    The email should include a call to action, such as "Click here to learn more" or "Order now". 
+    The email should also include a subject line that is catchy and relevant to the product.
+    The email should be relevant to the product and should not contain any irrelevant information. 
+    The email should be written in a way that is easy to understand and should not contain any technical jargon. 
+    The email should be written in a way that is engaging and should not be boring. 
+    The email should be written in a way that is persuasive and should not be pushy. 
+    The email should be written in a way that is friendly and should not be rude. 
+    The email should be written in a way that is professional and should not be unprofessional.
     `;
+
     // STOP COPYING HERE
     ```
 
@@ -177,6 +168,8 @@ As mentioned earlier, we are going to respond to events and use a GenAI model to
     async function processMessage(data) {
       console.log('Received message:', data);
 
+      console.log('Generating email now');
+    
       // Generate sample marketing emails
       const response = await openai.chat.completions.create({
         model: process.env.OPENAI_MODEL || 'jacobhoward459/phi4-mini-instruct:3.84B-Q4_0',
@@ -191,21 +184,18 @@ As mentioned earlier, we are going to respond to events and use a GenAI model to
           },
         ],
       });
-
+    
       // Sometimes, models still wrap JSON in markdown code blocks, so let's remove that.
       let responseText = response.choices[0].message.content;
       if (responseText.startsWith('```json')) {
         responseText = responseText.slice(7, -3);
       }
-
+    
       // Simply output them to the console.
       // In real situations, we'd look up relavent customers and queue emails.
-      const { emails } = JSON.parse(responseText);
-      emails.forEach(generatedEmail => {
-        console.log(`Subject: ${generatedEmail.subject}`);
-        console.log(`Body: ${generatedEmail.body}`);
-        console.log('---');
-      });
+      const { subject, body } = JSON.parse(responseText);
+      console.log(`Subject: ${subject}`);
+      console.log(`Body: ${body}`);
     }
     ```
 
@@ -220,7 +210,7 @@ As mentioned earlier, we are going to respond to events and use a GenAI model to
     }
     ```
 
-    After a moment, you should see three sample emails to help market this new product!
+    After a moment, you should see the generated email to help market this new product!
 
 ## Recap
 
